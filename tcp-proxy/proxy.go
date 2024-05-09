@@ -25,6 +25,8 @@ func main() {
 }
 
 func handle(c net.Conn) {
+	defer c.Close()
+
 	dst, err := net.Dial("tcp", "localhost:8082")
 	if err != nil {
 		log.Println("couldn't reach the destination host")
@@ -40,4 +42,9 @@ func handle(c net.Conn) {
 	if _, err := io.Copy(dst, c); err != nil {
 		log.Println("couldn't send data to the destination host")
 	}
+}
+
+func handleBuffered(c net.Conn) {
+	defer c.Close()
+
 }
